@@ -1,0 +1,17 @@
+= Bug Flock: The Heist
+
+GameOff 2021 submission
+
+== Abstract
+
+You control the head bug, the master, the leader.
+All other bugs (AKA comrades) follow each other, like a wild collection of, ahem, bugs.
+Try to gather as many followers as possible and escape the hot pursuit of man's feet.
+Along the way, try not to fall victim to frogs.
+And, most importantly, gather as much loot as possible and don't lose it and your comrades on your way.
+
+== Controls
+
+Use arrow keys to steer main bug (might not be highlighted).
+
+Alternatively, steer the following feet (not planned to be implemented by the end of this run).
