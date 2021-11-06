@@ -1,0 +1,33 @@
+= Notes
+
+== Implementation stages
+
+=== General gameplay
+
+* [] No physics only flocking
+  ** steer a wild collection of circles
+  ** ... that do not interact with each other
+  ** ... by steering one particular circle.
+  ** ... Apply flocking dynamics.
+* [] add plane movement and target area.
+* [] dying and winning mechanics
+  ** die if you the bottom crosses you
+  ** win if you make it to the end
+* [] pick up objects
+  ** if virtual object radius intersects with x insects
+    *** object moves with the COM speed/direction of the sub-flock
+
+=== Yeah, physics
+
+* [] implement bugs as rigid bodies that do interact and collide with each other
+* [] add barriers to playing field
+* [] add frogs and shooting tongues to the side of the playing field
+  ** procedurally added
+  ** might be placed farther away from barrier
+    *** force the player to make a choice to potentially lose bugs by not fitting through the barrier or by being eating by a frog
+
+=== Yeah, graphics
+
+* [] add textures or any simple visualization
+* [] sprites/animation
+* [] just make it look nice
