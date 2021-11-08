@@ -1,19 +1,19 @@
 function love.load()
-  wdth = love.graphics.getWidth()
-  hght = love.graphics.getHeight()
+  width = love.graphics.getWidth()
+  height = love.graphics.getHeight()
 
   world_speed = 50
 
-  def_wdth = 10
+  def_width = 10
   vel_max = 100
 
   -- use metatables and fun to create these more dynamically
   bugs = {
-    {
-      pos = { x = wdth / 2, y = hght / 2 },
-      vel = { x = 0, y = 0 },
-      shape = { width = def_wdth },
-    }
+    -- {
+    --   pos = { x = width / 2, y = height / 2 },
+    --   vel = { x = 0, y = 0 },
+    --   shape = { width = def_width },
+    -- }
   }
 
   -- also create an overall container for bugs, objects, frogs, and feet
@@ -51,7 +51,7 @@ function love.update(dt)
     o.pos.x = o.pos.x + dt * o.vel.x
     o.pos.y = o.pos.y + dt * world_speed - dt * o.vel.y
 
-    if o.pos.y > hght then
+    if o.pos.y > height then
       love.event.quit()
     end
   end
