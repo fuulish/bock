@@ -75,12 +75,15 @@ function love.draw()
   -- debugging
   love.graphics.origin()
   love.graphics.setColor(1,1,1)
-  love.graphics.print(table.concat({
-    'x:  '..bugs[1].pos.x,
-    'y:  '..bugs[1].pos.y,
-    'vx: '..bugs[1].vel.x,
-    'vy: '..bugs[1].vel.y,
-  }, '\n'))
+  love.graphics.print(#bugs)
+  if #bugs > 0 then
+    love.graphics.print(table.concat({
+      'x:  '..bugs[1].pos.x,
+      'y:  '..bugs[1].pos.y,
+      'vx: '..bugs[1].vel.x,
+      'vy: '..bugs[1].vel.y,
+    }, '\n'))
+  end
 end
 
 
