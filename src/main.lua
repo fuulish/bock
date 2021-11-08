@@ -16,14 +16,23 @@ function love.load()
     -- }
   }
 
+  add_bug(width / 2, height / 2, 0, 0)
+
   -- also create an overall container for bugs, objects, frogs, and feet
 end
 
 function add_bug(x, y, vx, vy)
-  bugs.insert(bugs, #bugs,
-  {
-    pos = {x,y}, vel = {vx, vy}, shape = {width = def_width}
-  })
+  x = x or width / 2
+  y = y or height / 2
+
+  vx = vx or 0
+  vy = vy or 0
+
+  bugs[#bugs + 1] = {
+    pos   = {  x = x,   y = y  },
+    vel   = {  x = vx,  y = vy },
+    shape = {  width = def_width },
+  }
 end
 
 
