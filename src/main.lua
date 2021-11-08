@@ -43,11 +43,11 @@ function love.update(dt)
   end
 
   if love.keyboard.isDown('j') then
-    bugs[1].vel.y = math.min(bugs[1].vel.y - 1, vel_max)
+    bugs[1].vel.y = math.max(bugs[1].vel.y - 1, -vel_max)
   end
 
   if love.keyboard.isDown('h') then
-    bugs[1].vel.x = math.min(bugs[1].vel.x - 1, vel_max)
+    bugs[1].vel.x = math.max(bugs[1].vel.x - 1, -vel_max)
   end
 
   if love.keyboard.isDown('l') then
