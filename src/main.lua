@@ -41,19 +41,19 @@ end
 
 function handle_input()
   --no friction and continuous, floaty movement
-  if love.keyboard.isDown('k') then
+  if love.keyboard.isDown('k') or love.keyboard.isDown('up') then
     bugs[1].vel.y = math.min(bugs[1].vel.y + 1, vel_max)
   end
 
-  if love.keyboard.isDown('j') then
+  if love.keyboard.isDown('j') or love.keyboard.isDown('down') then
     bugs[1].vel.y = math.max(bugs[1].vel.y - 1, -vel_max)
   end
 
-  if love.keyboard.isDown('h') then
+  if love.keyboard.isDown('h') or love.keyboard.isDown('left') then
     bugs[1].vel.x = math.max(bugs[1].vel.x - 1, -vel_max)
   end
 
-  if love.keyboard.isDown('l') then
+  if love.keyboard.isDown('l') or love.keyboard.isDown('right') then
     bugs[1].vel.x = math.min(bugs[1].vel.x + 1, vel_max)
   end
 end
