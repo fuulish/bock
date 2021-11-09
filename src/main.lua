@@ -58,14 +58,7 @@ function handle_input()
   end
 end
 
-
-function love.update(dt)
-  if math.random() <= bug_creation_rate then
-    add_bug(math.random(width), 0, math.random(max_rand_vel), math.random(max_rand_vel))
-  end
-
-  -- move the plane of existence by moving all of the objects?
-  -- just zip all relevant lists together (like in python, if it exists)
+function update_bugs(dt)
   lost_bugs = {}
   for i, o in ipairs(bugs) do
     o.pos.x = o.pos.x + dt * o.vel.x
@@ -78,7 +71,16 @@ function love.update(dt)
   for i = #lost_bugs, 1, -1 do
     table.remove(bugs, lost_bugs[i])
   end
+end
 
+function love.update(dt)
+  if math.random() <= bug_creation_rate then
+    add_bug(math.random(width), 0, math.random(max_rand_vel), math.random(max_rand_vel))
+  end
+
+  -- move the plane of existence by moving all of the objects?
+  -- just zip all relevant lists together (like in python, if it exists)
+  update_bugs(dt)
   handle_input()
 
   if bugs[1].pos.y > height then
