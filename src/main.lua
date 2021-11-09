@@ -19,7 +19,7 @@ function love.load()
     -- }
   }
 
-  add_bug(width / 2, height / 2, 0, 0)
+  add_bug(width / 2, height / 2, 0, world_speed)
 
   -- also create an overall container for bugs, objects, frogs, and feet
 end
