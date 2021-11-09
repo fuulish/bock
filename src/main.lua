@@ -66,9 +66,17 @@ function love.update(dt)
 
   -- move the plane of existence by moving all of the objects?
   -- just zip all relevant lists together (like in python, if it exists)
+  lost_bugs = {}
   for i, o in ipairs(bugs) do
     o.pos.x = o.pos.x + dt * o.vel.x
     o.pos.y = o.pos.y + dt * world_speed - dt * o.vel.y
+    if o.pos.y > height then
+      table.insert(lost_bugs, i)
+    end
+  end
+
+  for i = #lost_bugs, 1, -1 do
+    table.remove(bugs, lost_bugs[i])
   end
 
   handle_input()
