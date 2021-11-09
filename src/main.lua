@@ -88,6 +88,8 @@ function love.draw()
     love.graphics.circle('fill', bug.pos.x, bug.pos.y, bug.shape.width)
   end
 
+  love.graphics.setBackgroundColor(0.1, 1, 0.3)
+
   -- debugging
   love.graphics.origin()
   love.graphics.setColor(1,1,1)
