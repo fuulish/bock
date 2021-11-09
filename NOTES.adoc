@@ -17,6 +17,10 @@
   ** if virtual object radius intersects with x insects
     *** object moves with the COM speed/direction of the sub-flock
 
+* flocking rules
+  ** heavier weight to player bug
+  ** think about not having flocking rules applied to player bug
+
 === Yeah, physics
 
 * [] implement bugs as rigid bodies that do interact and collide with each other

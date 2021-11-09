@@ -10,7 +10,8 @@ function love.load()
   bug_creation_rate = 0.025
   max_rand_vel = 30
 
-  bug_adhesive = 0.01
+  bug_adhesive = 0.001
+  bug_alignment = 0.01
 
   -- use metatables and fun to create these more dynamically
   bugs = {
@@ -79,16 +80,29 @@ function update_bugs(dt)
   center = calc_bug_center()
   avel = calc_bug_avel()
 
-  cohesion(center)
-
-  -- add_alignment()
-  -- add_chill()
-
   -- perform flocking update
+
+  cohesion(center)
+  alignment(avel)
+
+  -- chill()
 end
 
-function cohesion(center)
 
+function alignment(avel)
+  local align = { x = 0, y = 0 }
+
+  for i in pairs(bugs) do
+    align.x = avel.x - bugs[i].vel.x
+    align.y = avel.y - bugs[i].vel.y
+
+    bugs[i].vel.x = bugs[i].vel.x + align.x * bug_alignment
+    bugs[i].vel.y = bugs[i].vel.y + align.y * bug_alignment
+  end
+end
+
+
+function cohesion(center)
   local coh = { x = 0, y = 0 }
 
   for i in pairs(bugs) do
