@@ -24,6 +24,7 @@ function love.load()
   -- also create an overall container for bugs, objects, frogs, and feet
 end
 
+
 function add_bug(x, y, vx, vy)
   x = x or width / 2
   y = y or height / 2
@@ -58,6 +59,7 @@ function handle_input()
   end
 end
 
+
 function update_bugs(dt)
   lost_bugs = {}
   for i, o in ipairs(bugs) do
@@ -72,6 +74,7 @@ function update_bugs(dt)
     table.remove(bugs, lost_bugs[i])
   end
 end
+
 
 function love.update(dt)
   if math.random() <= bug_creation_rate then
