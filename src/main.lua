@@ -7,6 +7,9 @@ function love.load()
   def_width = 10
   vel_max = 100
 
+  bug_creation_rate = 0.025
+  max_rand_vel = 30
+
   -- use metatables and fun to create these more dynamically
   bugs = {
     -- {
@@ -36,7 +39,7 @@ function add_bug(x, y, vx, vy)
 end
 
 
-function love.update(dt)
+function handle_input()
   --no friction and continuous, floaty movement
   if love.keyboard.isDown('k') then
     bugs[1].vel.y = math.min(bugs[1].vel.y + 1, vel_max)
@@ -53,22 +56,35 @@ function love.update(dt)
   if love.keyboard.isDown('l') then
     bugs[1].vel.x = math.min(bugs[1].vel.x + 1, vel_max)
   end
+end
+
+
+function love.update(dt)
+  if math.random() <= bug_creation_rate then
+    add_bug(math.random(width), 0, math.random(max_rand_vel), math.random(max_rand_vel))
+  end
 
   -- move the plane of existence by moving all of the objects?
   -- just zip all relevant lists together (like in python, if it exists)
   for i, o in ipairs(bugs) do
     o.pos.x = o.pos.x + dt * o.vel.x
     o.pos.y = o.pos.y + dt * world_speed - dt * o.vel.y
+  end
 
-    if o.pos.y > height then
-      love.event.quit()
-    end
+  handle_input()
+
+  if bugs[1].pos.y > height then
+    love.event.quit()
   end
 end
 
 
 function love.draw()
   for i, bug in ipairs(bugs) do
+    love.graphics.setColor(1, 1, 1)
+    if 1 == i then
+      love.graphics.setColor(1, 0, 0)
+    end
     love.graphics.circle('fill', bug.pos.x, bug.pos.y, bug.shape.width)
   end
 
