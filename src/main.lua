@@ -10,6 +10,8 @@ function love.load()
   bug_creation_rate = 0.025
   max_rand_vel = 30
 
+  bug_adhesive = 0.01
+
   -- use metatables and fun to create these more dynamically
   bugs = {
     -- {
@@ -73,6 +75,63 @@ function update_bugs(dt)
   for i = #lost_bugs, 1, -1 do
     table.remove(bugs, lost_bugs[i])
   end
+
+  center = calc_bug_center()
+  avel = calc_bug_avel()
+
+  cohesion(center)
+
+  -- add_alignment()
+  -- add_chill()
+
+  -- perform flocking update
+end
+
+function cohesion(center)
+
+  local coh = { x = 0, y = 0 }
+
+  for i in pairs(bugs) do
+    coh.x = center.x - bugs[i].pos.x
+    coh.y = center.y - bugs[i].pos.y
+
+    bugs[i].vel.x = bugs[i].vel.x + coh.x * bug_adhesive
+    bugs[i].vel.y = bugs[i].vel.y - coh.y * bug_adhesive
+  end
+end
+
+
+function calc_bug_center()
+  local x = 0.
+  local y = 0.
+
+  for i in pairs(bugs) do
+    x = x + bugs[i].pos.x
+    y = y + bugs[i].pos.y
+  end
+  x = x / #bugs
+  y = y / #bugs
+
+  return { x = x, y = y }
+end
+
+
+function calc_bug_avel()
+  local vx = 0.
+  local vy = 0.
+
+  for i in pairs(bugs) do
+    vx = vx + bugs[i].vel.x
+    vy = vy + bugs[i].vel.y
+  end
+
+  vx = vx / #bugs
+  vy = vy / #bugs
+
+  return { x = vx, y = vy }
+end
+
+function add_cohesion()
 end
 
 
@@ -102,6 +161,10 @@ function love.draw()
   end
 
   love.graphics.setBackgroundColor(0.1, 1, 0.3)
+
+  center = calc_bug_center()
+  love.graphics.setColor(0, 0, 1)
+  love.graphics.circle('fill', center.x, center.y, def_bug_width)
 
   -- debugging
   love.graphics.origin()
