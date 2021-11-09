@@ -4,7 +4,7 @@ function love.load()
 
   world_speed = 50
 
-  def_width = 10
+  def_bug_width = 10
   vel_max = 100
 
   bug_creation_rate = 0.025
@@ -15,7 +15,7 @@ function love.load()
     -- {
     --   pos = { x = width / 2, y = height / 2 },
     --   vel = { x = 0, y = 0 },
-    --   shape = { width = def_width },
+    --   shape = { width = def_bug_width },
     -- }
   }
 
@@ -35,7 +35,7 @@ function add_bug(x, y, vx, vy)
   bugs[#bugs + 1] = {
     pos   = {  x = x,   y = y  },
     vel   = {  x = vx,  y = vy },
-    shape = {  width = def_width },
+    shape = {  width = def_bug_width },
   }
 end
 
