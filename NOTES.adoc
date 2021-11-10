@@ -24,6 +24,10 @@
 * cap the number of bugs allowed on the screen simultaneously
   ** otherwise no one will follow the main bug anymore
 
+* add directionality visualization to show where bugs are headed
+
+* add visible movement of plane to better understand gameplay
+
 === Yeah, physics
 
 * [] implement bugs as rigid bodies that do interact and collide with each other
