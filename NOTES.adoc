@@ -21,6 +21,9 @@
   ** heavier weight to player bug
   ** think about not having flocking rules applied to player bug
 
+* cap the number of bugs allowed on the screen simultaneously
+  ** otherwise no one will follow the main bug anymore
+
 === Yeah, physics
 
 * [] implement bugs as rigid bodies that do interact and collide with each other
