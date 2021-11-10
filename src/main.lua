@@ -14,6 +14,8 @@ function love.load()
   bug_alignment = 0.01
   bug_bias = 0.1
 
+  player_bug_enhancement = 5
+
   -- use metatables and fun to create these more dynamically
   bugs = {
     -- {
@@ -136,13 +138,20 @@ end
 
 function cohesion(center)
   local coh = { x = 0, y = 0 }
+  local fac = 1
 
   for i in pairs(bugs) do
     coh.x = center.x - bugs[i].pos.x
     coh.y = center.y - bugs[i].pos.y
 
-    bugs[i].vel.x = bugs[i].vel.x + coh.x * bug_adhesive
-    bugs[i].vel.y = bugs[i].vel.y - coh.y * bug_adhesive
+    if 1 == i then
+      fac = 1
+    else
+      fac = player_bug_enhancement
+    end
+
+    bugs[i].vel.x = bugs[i].vel.x + coh.x * bug_adhesive * fac
+    bugs[i].vel.y = bugs[i].vel.y - coh.y * bug_adhesive * fac
   end
 end
 
