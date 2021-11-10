@@ -12,6 +12,7 @@ function love.load()
 
   bug_adhesive = 0.001
   bug_alignment = 0.01
+  bug_bias = 0.1
 
   -- use metatables and fun to create these more dynamically
   bugs = {
@@ -85,7 +86,38 @@ function update_bugs(dt)
   cohesion(center)
   alignment(avel)
 
-  -- chill()
+  chill()
+end
+
+
+function chill()
+  for i in pairs(bugs) do
+    bias = calc_separation_bias(i)
+
+    bugs[i].vel.x = bugs[i].vel.x + bias.x * bug_bias
+    bugs[i].vel.y = bugs[i].vel.y + bias.y * bug_bias
+  end
+end
+
+
+function calc_separation_bias(me)
+  local bias = { x = 0, y = 0 }
+  local dist = { x = 0, y = 0 }
+
+  for i in pairs(bugs) do
+    if i ~= me then
+
+      dist.x = bugs[me].pos.x - bugs[i].pos.x
+      dist.y = bugs[me].pos.y - bugs[i].pos.y
+
+      if math.sqrt(dist.x*dist.x + dist.y*dist.y) < (bugs[me].shape.width + bugs[i].shape.width) * 2 then
+        bias.x = bias.x + dist.x
+        bias.y = bias.y + dist.y
+      end
+    end
+  end
+
+  return bias
 end
 
 
