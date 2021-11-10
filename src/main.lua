@@ -219,7 +219,7 @@ function love.draw()
 
   center = calc_bug_center()
   love.graphics.setColor(0, 0, 1)
-  love.graphics.circle('fill', center.x, center.y, def_bug_width)
+  love.graphics.circle('fill', center.x, center.y, def_bug_width / 2)
 
   -- debugging
   love.graphics.origin()
