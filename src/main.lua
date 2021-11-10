@@ -3,6 +3,7 @@ function love.load()
   height = love.graphics.getHeight()
 
   world_speed = 50
+  max_bugs = 20
 
   def_bug_width = 10
   vel_max = 100
@@ -191,7 +192,7 @@ end
 
 
 function love.update(dt)
-  if math.random() <= bug_creation_rate then
+  if #bugs < max_bugs and math.random() <= bug_creation_rate then
     add_bug(math.random(width), 0, math.random(max_rand_vel), math.random(max_rand_vel))
   end
 
