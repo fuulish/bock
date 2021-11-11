@@ -6,7 +6,7 @@ function love.load()
   max_bugs = 20
 
   def_bug_width = 10
-  vel_max = 100
+  max_vel = 100
 
   bug_creation_rate = 0.025
   max_rand_vel = 30
@@ -53,19 +53,19 @@ end
 function handle_input()
   --no friction and continuous, floaty movement
   if love.keyboard.isDown('k') or love.keyboard.isDown('up') then
-    bugs[1].vel.y = math.min(bugs[1].vel.y + 1, vel_max)
+    bugs[1].vel.y = math.min(bugs[1].vel.y + 1, max_vel)
   end
 
   if love.keyboard.isDown('j') or love.keyboard.isDown('down') then
-    bugs[1].vel.y = math.max(bugs[1].vel.y - 1, -vel_max)
+    bugs[1].vel.y = math.max(bugs[1].vel.y - 1, -max_vel)
   end
 
   if love.keyboard.isDown('h') or love.keyboard.isDown('left') then
-    bugs[1].vel.x = math.max(bugs[1].vel.x - 1, -vel_max)
+    bugs[1].vel.x = math.max(bugs[1].vel.x - 1, -max_vel)
   end
 
   if love.keyboard.isDown('l') or love.keyboard.isDown('right') then
-    bugs[1].vel.x = math.min(bugs[1].vel.x + 1, vel_max)
+    bugs[1].vel.x = math.min(bugs[1].vel.x + 1, max_vel)
   end
 end
 
