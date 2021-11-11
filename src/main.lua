@@ -219,6 +219,12 @@ function love.update(dt)
 end
 
 
+-- alternative bug visualization would be:
+-- love.graphics.rotate() -- rotate coordinate system
+-- love.graphics.ellipse() -- draw the bug
+-- love.graphics.origin()
+
+
 function love.draw()
   for i, bug in ipairs(bugs) do
     love.graphics.setColor(1, 1, 1)
