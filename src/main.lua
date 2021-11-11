@@ -248,7 +248,7 @@ function love.draw()
     love.graphics.setColor(0, 0, 0)
     love.graphics.circle('fill',
       bug.pos.x + bug.vel.x * factor,
-      bug.pos.y + bug.vel.y * factor, bug.shape.width / 5)
+      bug.pos.y - bug.vel.y * factor, bug.shape.width / 5)
   end
 
   love.graphics.setBackgroundColor(0.1, 1, 0.3)
