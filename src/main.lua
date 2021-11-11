@@ -75,9 +75,26 @@ function update_bugs(dt)
   for i, o in ipairs(bugs) do
     o.pos.x = o.pos.x + dt * o.vel.x
     o.pos.y = o.pos.y + dt * world_speed - dt * o.vel.y
+
+    -- die at the bottom
     if o.pos.y > height then
       table.insert(lost_bugs, i)
+    else
+      -- reflective boundaries left, right, top
+      if o.pos.x < 0 then
+        o.pos.x = -o.pos.x
+        o.vel.x = -o.vel.x
+      elseif o.pos.x > width then
+        o.pos.x = 2 * width - o.pos.x
+        o.vel.x = -o.vel.x
+      end
+
+      if o.pos.y < 0 then
+        o.vel.y = -o.vel.y
+        o.pos.y = -o.pos.y
+      end
     end
+
   end
 
   for i = #lost_bugs, 1, -1 do
