@@ -185,6 +185,7 @@ function calc_prop_avg(prop)
   return { x = x, y = y }
 end
 
+
 function love.update(dt)
   if #bugs < max_bugs and math.random() <= bug_creation_rate then
     add_bug(math.random(width), 0, math.random(max_rand_vel), math.random(max_rand_vel))
