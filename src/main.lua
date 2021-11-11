@@ -18,7 +18,7 @@ function love.load()
   vel = 'vel'
   pos = 'pos'
 
-  player_bug_enhancement = 5
+  player_bug_enhancement = 10
 
   -- use metatables and fun to create these more dynamically
   bugs = {
