@@ -4,14 +4,15 @@
 
 === General gameplay
 
-* [] No physics only flocking
+* [x] No physics only flocking
   ** steer a wild collection of circles
   ** ... that do not interact with each other
   ** ... by steering one particular circle.
   ** ... Apply flocking dynamics.
-* [] add plane movement and target area.
-* [] dying and winning mechanics
-  ** die if you the bottom crosses you
+* [x] add plane movement
+* [] add target area.
+* [] dying winning mechanics
+  ** [x] die if you the bottom crosses you
   ** win if you make it to the end
 * [] pick up objects
   ** if virtual object radius intersects with x insects
@@ -24,9 +25,12 @@
 * cap the number of bugs allowed on the screen simultaneously
   ** otherwise no one will follow the main bug anymore
 
-* add directionality visualization to show where bugs are headed
+* [x] add directionality visualization to show where bugs are headed
 
 * add visible movement of plane to better understand gameplay
+  ** need (some/more) objects (or some sort of ground pattern) to visualize plane movement
+
+* re-add plane movement
 
 === Yeah, physics
 
