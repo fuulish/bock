@@ -2,7 +2,6 @@ function love.load()
   width = love.graphics.getWidth()
   height = love.graphics.getHeight()
 
-  world_speed = 50
   max_bugs = 20
 
   def_bug_width = 10
@@ -20,6 +19,11 @@ function love.load()
 
   player_bug_enhancement = 10
 
+  death_bar = height
+  death_vel = 0
+  death_vel_red = 100
+  max_death_vel = 10
+
   -- use metatables and fun to create these more dynamically
   bugs = {
     -- {
@@ -29,7 +33,7 @@ function love.load()
     -- }
   }
 
-  add_bug(width / 2, height / 2, 0, world_speed)
+  add_bug(width / 2, height / 2, 0, math.random(0.1 * max_vel))
 
   -- also create an overall container for bugs, objects, frogs, and feet
 end
@@ -74,10 +78,10 @@ function update_bugs(dt)
   lost_bugs = {}
   for i, o in ipairs(bugs) do
     o.pos.x = o.pos.x + dt * o.vel.x
-    o.pos.y = o.pos.y + dt * world_speed - dt * o.vel.y
+    o.pos.y = o.pos.y - dt * o.vel.y -- up is down and down is up
 
     -- die at the bottom
-    if o.pos.y > height then
+    if o.pos.y > death_bar then
       table.insert(lost_bugs, i)
     else
       -- reflective boundaries left, right, top
@@ -208,6 +212,9 @@ function love.update(dt)
     add_bug(math.random(width), 0, math.random(max_rand_vel), math.random(max_rand_vel))
   end
 
+  death_vel = math.max(death_vel + 1, max_death_vel) / death_vel_red
+  death_bar = death_bar - death_vel
+
   -- move the plane of existence by moving all of the objects?
   -- just zip all relevant lists together (like in python, if it exists)
   update_bugs(dt)
@@ -245,6 +252,9 @@ function love.draw()
   end
 
   love.graphics.setBackgroundColor(0.1, 1, 0.3)
+
+  love.graphics.setColor(0, 0, 0)
+  love.graphics.line(0, death_bar, width, death_bar)
 
   center = calc_bug_center()
   love.graphics.setColor(0, 0, 1)
