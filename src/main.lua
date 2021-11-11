@@ -15,6 +15,9 @@ function love.load()
   bug_alignment = 0.01
   bug_bias = 0.1
 
+  vel = 'vel'
+  pos = 'pos'
+
   player_bug_enhancement = 5
 
   -- use metatables and fun to create these more dynamically
@@ -158,38 +161,29 @@ end
 
 
 function calc_bug_center()
+  return calc_prop_avg(pos)
+end
+
+
+function calc_bug_avel()
+  return calc_prop_avg(vel)
+end
+
+
+function calc_prop_avg(prop)
   local x = 0.
   local y = 0.
 
   for i in pairs(bugs) do
-    x = x + bugs[i].pos.x
-    y = y + bugs[i].pos.y
+    x = x + bugs[i][prop].x
+    y = y + bugs[i][prop].y
   end
+
   x = x / #bugs
   y = y / #bugs
 
   return { x = x, y = y }
 end
-
-
-function calc_bug_avel()
-  local vx = 0.
-  local vy = 0.
-
-  for i in pairs(bugs) do
-    vx = vx + bugs[i].vel.x
-    vy = vy + bugs[i].vel.y
-  end
-
-  vx = vx / #bugs
-  vy = vy / #bugs
-
-  return { x = vx, y = vy }
-end
-
-function add_cohesion()
-end
-
 
 function love.update(dt)
   if #bugs < max_bugs and math.random() <= bug_creation_rate then
