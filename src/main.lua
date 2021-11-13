@@ -10,14 +10,14 @@ function love.load()
   bug_creation_rate = 0.025
   max_rand_vel = 30
 
-  bug_adhesive = 0.001
-  bug_alignment = 0.01
-  bug_bias = 0.1
+  bug_adhesive = 0.0015
+  bug_alignment = 0.02
+  bug_bias = 0.3
 
   vel = 'vel'
   pos = 'pos'
 
-  player_bug_enhancement = 10
+  player_bug_enhancement = 15
 
   death_bar = height
   death_vel = 0
