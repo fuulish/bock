@@ -24,6 +24,8 @@ function love.load()
   death_vel_red = 100
   max_death_vel = 10
 
+  dt_vel_inp = 5
+
   -- use metatables and fun to create these more dynamically
   bugs = {
     -- {
@@ -57,19 +59,19 @@ end
 function handle_input()
   --no friction and continuous, floaty movement
   if love.keyboard.isDown('k') or love.keyboard.isDown('up') then
-    bugs[1].vel.y = math.min(bugs[1].vel.y + 1, max_vel)
+    bugs[1].vel.y = math.min(bugs[1].vel.y + dt_vel_inp, max_vel)
   end
 
   if love.keyboard.isDown('j') or love.keyboard.isDown('down') then
-    bugs[1].vel.y = math.max(bugs[1].vel.y - 1, -max_vel)
+    bugs[1].vel.y = math.max(bugs[1].vel.y - dt_vel_inp, -max_vel)
   end
 
   if love.keyboard.isDown('h') or love.keyboard.isDown('left') then
-    bugs[1].vel.x = math.max(bugs[1].vel.x - 1, -max_vel)
+    bugs[1].vel.x = math.max(bugs[1].vel.x - dt_vel_inp, -max_vel)
   end
 
   if love.keyboard.isDown('l') or love.keyboard.isDown('right') then
-    bugs[1].vel.x = math.min(bugs[1].vel.x + 1, max_vel)
+    bugs[1].vel.x = math.min(bugs[1].vel.x + dt_vel_inp, max_vel)
   end
 end
 
