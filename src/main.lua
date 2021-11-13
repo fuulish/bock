@@ -4,7 +4,8 @@ function love.load()
 
   max_bugs = 20
 
-  def_bug_width = 10
+  def_bug_width = 5
+  def_bug_length = 10
   max_vel = 100
 
   bug_creation_rate = 0.025
@@ -41,17 +42,20 @@ function love.load()
 end
 
 
-function add_bug(x, y, vx, vy)
+function add_bug(x, y, vx, vy, width, length)
   x = x or width / 2
   y = y or height / 2
 
   vx = vx or 0
   vy = vy or 0
 
+  width = width or def_bug_width
+  length = length or def_bug_length
+
   bugs[#bugs + 1] = {
     pos   = {  x = x,   y = y  },
     vel   = {  x = vx,  y = vy },
-    shape = {  width = def_bug_width },
+    shape = {  width = def_bug_width, length = def_bug_length },
   }
 end
 
@@ -233,11 +237,23 @@ end
 -- love.graphics.ellipse() -- draw the bug
 -- love.graphics.origin()
 
+function vec_len(vec)
+  return math.sqrt(vec.x*vec.x + vec.y*vec.y)
+end
+
 function draw_bug(bug)
-  love.graphics.circle('fill', bug.pos.x, bug.pos.y, bug.shape.width)
+
+  local angle = math.acos(bug.vel.x / vec_len(bug.vel))
+
+  love.graphics.rotate(angle)
+  love.graphics.ellipse('fill', bug.pos.x * math.cos(math.pi * 2 - angle) - bug.pos.y * math.sin(math.pi * 2 - angle),
+                                bug.pos.x * math.sin(math.pi * 2 - angle) + bug.pos.y * math.cos(math.pi * 2 - angle),
+                                bug.shape.length, bug.shape.width)
+  love.graphics.origin()
 
   -- for this visualization to work properly, we need to rework the world
   -- movement and have the bug at rest when its vel is zero
+
   local norm = math.sqrt(bug.vel.x * bug.vel.x + bug.vel.y * bug.vel.y)
   local factor = bug.shape.width * 0.9 / norm
 
@@ -245,6 +261,7 @@ function draw_bug(bug)
   love.graphics.circle('fill',
     bug.pos.x + bug.vel.x * factor,
     bug.pos.y - bug.vel.y * factor, bug.shape.width / 5)
+
 end
 
 
