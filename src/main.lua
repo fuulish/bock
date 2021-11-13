@@ -233,6 +233,20 @@ end
 -- love.graphics.ellipse() -- draw the bug
 -- love.graphics.origin()
 
+function draw_bug(bug)
+  love.graphics.circle('fill', bug.pos.x, bug.pos.y, bug.shape.width)
+
+  -- for this visualization to work properly, we need to rework the world
+  -- movement and have the bug at rest when its vel is zero
+  local norm = math.sqrt(bug.vel.x * bug.vel.x + bug.vel.y * bug.vel.y)
+  local factor = bug.shape.width * 0.9 / norm
+
+  love.graphics.setColor(0, 0, 0)
+  love.graphics.circle('fill',
+    bug.pos.x + bug.vel.x * factor,
+    bug.pos.y - bug.vel.y * factor, bug.shape.width / 5)
+end
+
 
 function love.draw()
   for i, bug in ipairs(bugs) do
@@ -240,17 +254,7 @@ function love.draw()
     if 1 == i then
       love.graphics.setColor(1, 0, 0)
     end
-    love.graphics.circle('fill', bug.pos.x, bug.pos.y, bug.shape.width)
-
-    -- for this visualization to work properly, we need to rework the world
-    -- movement and have the bug at rest when its vel is zero
-    local norm = math.sqrt(bug.vel.x * bug.vel.x + bug.vel.y * bug.vel.y)
-    local factor = bug.shape.width * 0.9 / norm
-
-    love.graphics.setColor(0, 0, 0)
-    love.graphics.circle('fill',
-      bug.pos.x + bug.vel.x * factor,
-      bug.pos.y - bug.vel.y * factor, bug.shape.width / 5)
+    draw_bug(bug)
   end
 
   love.graphics.setBackgroundColor(0.1, 1, 0.3)
