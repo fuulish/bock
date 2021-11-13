@@ -218,7 +218,7 @@ function love.update(dt)
     add_bug(math.random(width), 0, math.random(max_rand_vel), math.random(max_rand_vel))
   end
 
-  death_vel = math.max(death_vel + 1, max_death_vel) / death_vel_red
+  death_vel = math.min(death_vel + 1, max_death_vel) / death_vel_red
   death_bar = death_bar - death_vel
 
   -- move the plane of existence by moving all of the objects?
