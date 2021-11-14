@@ -30,7 +30,11 @@ function love.load(args)
   death_vel_red = 100
   max_death_vel = 10
 
-  dt_vel_inp = 5
+  if debug then
+    dt_vel_inp = 1
+  else
+    dt_vel_inp = 5
+  end
 
   -- use metatables and fun to create these more dynamically
   bugs = {
