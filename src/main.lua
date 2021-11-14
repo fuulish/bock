@@ -55,7 +55,7 @@ function add_bug(x, y, vx, vy, width, length)
   bugs[#bugs + 1] = {
     pos   = {  x = x,   y = y  },
     vel   = {  x = vx,  y = vy },
-    shape = {  width = def_bug_width, length = def_bug_length },
+    shape = {  width = width, length = length},
   }
 end
 
