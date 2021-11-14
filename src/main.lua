@@ -51,7 +51,8 @@ function love.load(args)
     max_death_vel = 10
   end
 
-  add_bug(width / 2, height / 2, 0, math.random(0.1 * max_vel), main_bug_width, main_bug_length)
+  add_bug(width / 2, height / 2, 0, math.random(0.1 * max_vel),
+          main_bug_width, main_bug_length)
 
   -- also create an overall container for bugs, objects, frogs, and feet
 end
@@ -158,7 +159,8 @@ function calc_separation_bias(me)
       dist.x = bugs[me].pos.x - bugs[i].pos.x
       dist.y = bugs[me].pos.y - bugs[i].pos.y
 
-      if math.sqrt(dist.x*dist.x + dist.y*dist.y) < (bugs[me].shape.width + bugs[i].shape.width) * 2 then
+      if math.sqrt(dist.x*dist.x + dist.y*dist.y) <
+                    (bugs[me].shape.width + bugs[i].shape.width) * 2 then
         bias.x = bias.x + dist.x
         bias.y = bias.y + dist.y
       end
@@ -230,7 +232,10 @@ end
 
 function love.update(dt)
   if #bugs < max_bugs and math.random() <= bug_creation_rate then
-    add_bug(math.random(width), 0, math.random(max_rand_vel), math.random(max_rand_vel))
+    add_bug(math.random(width),
+            0,
+            math.random(max_rand_vel),
+            math.random(max_rand_vel))
   end
 
   death_vel = math.min(death_vel + 1, max_death_vel) / death_vel_red
@@ -261,8 +266,10 @@ function draw_bug(bug)
   local angle = math.acos(bug.vel.x / vec_len(bug.vel))
 
   love.graphics.rotate(angle)
-  love.graphics.ellipse('fill', bug.pos.x * math.cos(math.pi * 2 - angle) - bug.pos.y * math.sin(math.pi * 2 - angle),
-                                bug.pos.x * math.sin(math.pi * 2 - angle) + bug.pos.y * math.cos(math.pi * 2 - angle),
+  love.graphics.ellipse('fill', bug.pos.x * math.cos(math.pi * 2 - angle) -
+                                  bug.pos.y * math.sin(math.pi * 2 - angle),
+                                bug.pos.x * math.sin(math.pi * 2 - angle) +
+                                  bug.pos.y * math.cos(math.pi * 2 - angle),
                                 bug.shape.length, bug.shape.width)
   love.graphics.origin()
 
