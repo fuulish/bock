@@ -269,6 +269,10 @@ function draw_bug(bug)
 
   local angle = math.acos(bug.vel.x / vec_len(bug.vel))
 
+  if bug.vel.y > 0 then
+    angle = -angle
+  end
+
   love.graphics.rotate(angle)
   love.graphics.ellipse('fill', bug.pos.x * math.cos(math.pi * 2 - angle) -
                                   bug.pos.y * math.sin(math.pi * 2 - angle),
