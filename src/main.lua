@@ -1,6 +1,11 @@
-function love.load()
+function love.load(args)
   width = love.graphics.getWidth()
   height = love.graphics.getHeight()
+
+  debug = false
+  if 'debug' == args[1] then
+    debug = true
+  end
 
   max_bugs = 20
 
@@ -36,7 +41,17 @@ function love.load()
     -- }
   }
 
-  add_bug(width / 2, height / 2, 0, math.random(0.1 * max_vel))
+  main_bug_width = def_bug_width
+  main_bug_length = def_bug_length
+
+  if debug then
+    main_bug_width = main_bug_width * 10
+    main_bug_length = main_bug_length * 10
+    max_bugs = 0
+    max_death_vel = 10
+  end
+
+  add_bug(width / 2, height / 2, 0, math.random(0.1 * max_vel), main_bug_width, main_bug_length)
 
   -- also create an overall container for bugs, objects, frogs, and feet
 end
