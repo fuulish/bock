@@ -342,8 +342,9 @@ function love.update(dt)
   local tstop = os.clock()
 
   if debug or debugtime then
-    print(string.format("took %.8f seconds for the hardest loop", tstop - tstart))
-    print(string.format("took %.8f seconds for the full loop", tstop - curtime))
+    io.write(string.format("took %.6f for update, %.6f seconds for the full loop\r",
+                           tstop - tstart,
+                           tstop - curtime))
   end
   curtime = tstop
 end
