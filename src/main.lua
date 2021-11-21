@@ -206,8 +206,32 @@ function handle_input()
 end
 
 
+function update_frogs(dt)
+  local lost_frogs = {}
+
+  for i, f in pairs(frogs) do
+    if f.pos.y > death_bar then
+      table.insert(lost_frogs, i)
+    end
+  end
+
+  for i = #lost_frogs, 1, -1 do
+    table.remove(frogs, lost_frogs[i])
+  end
+end
+
+
 function update_cookies(dt)
+  local lost_cookies = {}
+
   for i, c in ipairs(cookies) do
+    if c.pos.y > death_bar then
+      table.insert(lost_cookies, i)
+    end
+  end
+
+  for i = #lost_cookies, 1, -1 do
+    table.remove(cookies, lost_cookies[i])
   end
 end
 
@@ -398,6 +422,7 @@ function love.update(dt)
   -- just zip all relevant lists together (like in python, if it exists)
   update_bugs(dt)
   update_cookies(dt)
+  update_frogs(dt)
   handle_input()
 
   if bugs[1].pos.y > height then
