@@ -8,6 +8,7 @@ function love.load(args)
   end
 
   max_bugs = 20
+  dm = nil
 
   def_bug_width = 5
   def_bug_length = 10
@@ -64,7 +65,38 @@ function love.load(args)
   add_bug(width / 2, height / 2, 0, math.random(0.1 * max_vel),
           main_bug_width, main_bug_length)
 
+  init_dist_mat()
+  calc_dist_mat()
+
   -- also create an overall container for bugs, objects, frogs, and feet
+end
+
+
+function init_dist_mat()
+  dm = {}
+  for i=1,#bugs do
+    dm[i] = {}
+    for j=1,#bugs do
+      dm[i][j] = 0
+    end
+  end
+end
+
+
+function calc_dist_mat()
+  for i, bi in ipairs(bugs) do
+    for j, bj in ipairs(bugs) do
+      if i == j then
+        dm[i][j] = 0
+      elseif i < j then
+        -- refactor into reusable function
+        local d = { x = bi.pos.x - bj.pos.x, y = bi.pos.y - bj.pos.y }
+        dm[i][j] = vec_len(d)
+      elseif i > j then
+        dm[i][j] = dm[j][i]
+      end
+    end
+  end
 end
 
 
@@ -285,6 +317,9 @@ function love.update(dt)
 
   death_vel = math.min(death_vel + 1, max_death_vel) / death_vel_red
   death_bar = death_bar - death_vel
+
+  init_dist_mat()
+  calc_dist_mat()
 
   -- move the plane of existence by moving all of the objects?
   -- just zip all relevant lists together (like in python, if it exists)
