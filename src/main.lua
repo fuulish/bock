@@ -15,6 +15,7 @@ function love.load(args)
 
   bug_creation_rate = 0.025
   max_rand_vel = 30
+  bug_rando_red = 0.2
 
   bug_adhesive = 0.0015
   bug_alignment = 0.02
@@ -164,6 +165,8 @@ function update_bugs(dt)
   alignment(avel)
 
   chill()
+
+  randomize()
 end
 
 
@@ -208,6 +211,16 @@ function alignment(avel)
 
     bugs[i].vel.x = bugs[i].vel.x + align.x * bug_alignment
     bugs[i].vel.y = bugs[i].vel.y + align.y * bug_alignment
+  end
+end
+
+
+function randomize()
+  for i, b in ipairs(bugs) do
+    if i ~= 1 then
+      b.vel.x = b.vel.x + (math.random() * 2 - 1.) * max_rand_vel * bug_rando_red
+      b.vel.y = b.vel.y + (math.random() * 2 - 1.) * max_rand_vel * bug_rando_red
+    end
   end
 end
 
