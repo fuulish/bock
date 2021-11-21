@@ -13,6 +13,8 @@ function love.load(args)
     end
   end
 
+  world_speed = 10
+
   max_bugs = 20
   dm = nil
 
@@ -81,6 +83,12 @@ function love.load(args)
   calc_dist_mat()
 
   curtime = os.clock()
+
+  registered_tables = {
+    bugs,
+    cookies,
+    frogs
+  }
 
   -- also create an overall container for bugs, objects, frogs, and feet
 end
@@ -249,6 +257,15 @@ function update_bugs(dt)
 end
 
 
+function move_world(dt)
+  for t in pairs(registered_tables) do
+    for i, obj in ipairs(registered_tables[t]) do
+      obj.pos.y = obj.pos.y + dt * world_speed
+    end
+  end
+end
+
+
 function chill()
   for i in pairs(bugs) do
     bias = calc_separation_bias(i)
@@ -352,6 +369,9 @@ end
 
 function love.update(dt)
   local tstart = os.clock()
+
+  move_world(dt)
+
   if #bugs < max_bugs and math.random() <= bug_creation_rate then
     add_bug(math.random(width),
             0,
