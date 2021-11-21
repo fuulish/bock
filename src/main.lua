@@ -3,8 +3,14 @@ function love.load(args)
   height = love.graphics.getHeight()
 
   debug = false
-  if 'debug' == args[1] then
-    debug = true
+  debug_time = false
+
+  for i, arg in ipairs(args) do
+    if 'debug' == arg then
+      debug = true
+    elseif 'debugtime' == arg then
+      debugtime = true
+    end
   end
 
   max_bugs = 20
@@ -335,10 +341,10 @@ function love.update(dt)
   end
   local tstop = os.clock()
 
-  -- if debug then
+  if debug or debugtime then
     print(string.format("took %.8f seconds for the hardest loop", tstop - tstart))
     print(string.format("took %.8f seconds for the full loop", tstop - curtime))
-  -- end
+  end
   curtime = tstop
 end
 
