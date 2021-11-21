@@ -1,5 +1,9 @@
 = Notes
 
+== Other ToDo
+
+* [] refactor/rename global variables (e.g., width and height)
+
 == Implementation stages
 
 === General gameplay
@@ -31,6 +35,8 @@
   ** need (some/more) objects (or some sort of ground pattern) to visualize plane movement
 
 * re-add plane movement
+  ** add some ground structure to indicate plane movement
+
 
 === Yeah, physics
 
@@ -40,6 +46,8 @@
   ** procedurally added
   ** might be placed farther away from barrier
     *** force the player to make a choice to potentially lose bugs by not fitting through the barrier or by being eating by a frog
+  ** rotate according to some rules
+    *** e.g., towards the largest flock
 
 === Yeah, graphics
 
