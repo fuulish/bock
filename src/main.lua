@@ -13,7 +13,7 @@ function love.load(args)
     end
   end
 
-  world_speed = 10
+  world_speed = 30
 
   max_bugs = 20
   dm = nil
@@ -22,7 +22,7 @@ function love.load(args)
   def_bug_length = 10
   max_vel = 100
 
-  bug_creation_rate = 0.025
+  bug_creation_rate = 0.010
   max_rand_vel = 30
   bug_rando_red = 0.2
 
@@ -58,13 +58,13 @@ function love.load(args)
   max_cookies = 3
   cookies = {}
   def_cookie_width = def_bug_width * 10
-  cookie_creation_rate = bug_creation_rate / 2
+  cookie_creation_rate = bug_creation_rate / 4
 
   max_frogs = 5
   frogs = {}
 
   def_frog_width = def_bug_width * 5
-  frog_creation_rate = 0.5 -- alternate sides as well
+  frog_creation_rate = 0.0005 -- alternate sides as well
 
   main_bug_width = def_bug_width
   main_bug_length = def_bug_length
