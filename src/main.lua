@@ -45,6 +45,11 @@ function love.load(args)
     -- }
   }
 
+  max_cookies = 3
+  cookies = {}
+  def_cookie_width = def_bug_width * 10
+  cookie_creation_rate = bug_creation_rate / 2
+
   main_bug_width = def_bug_width
   main_bug_length = def_bug_length
 
@@ -62,6 +67,19 @@ function love.load(args)
 end
 
 
+function add_cookie(x, y, width)
+  x = x or width / 2
+  y = y or height / 2
+
+  local width = width or def_cookie_width
+
+  cookies[#cookies + 1] = {
+    pos = { x = x, y = y },
+    shape = { width = width },
+  }
+end
+
+
 function add_bug(x, y, vx, vy, width, length)
   x = x or width / 2
   y = y or height / 2
@@ -69,8 +87,8 @@ function add_bug(x, y, vx, vy, width, length)
   vx = vx or 0
   vy = vy or 0
 
-  width = width or def_bug_width
-  length = length or def_bug_length
+  local width = width or def_bug_width
+  local length = length or def_bug_length
 
   bugs[#bugs + 1] = {
     pos   = {  x = x,   y = y  },
@@ -96,6 +114,12 @@ function handle_input()
 
   if love.keyboard.isDown('l') or love.keyboard.isDown('right') then
     bugs[1].vel.x = math.min(bugs[1].vel.x + dt_vel_inp, max_vel)
+  end
+end
+
+
+function update_cookies(dt)
+  for i, c in ipairs(cookies) do
   end
 end
 
@@ -242,12 +266,17 @@ function love.update(dt)
             math.random(max_rand_vel))
   end
 
+  if #cookies < max_cookies and math.random() <= cookie_creation_rate then
+    add_cookie(math.random(width), 0)
+  end
+
   death_vel = math.min(death_vel + 1, max_death_vel) / death_vel_red
   death_bar = death_bar - death_vel
 
   -- move the plane of existence by moving all of the objects?
   -- just zip all relevant lists together (like in python, if it exists)
   update_bugs(dt)
+  update_cookies(dt)
   handle_input()
 
   if bugs[1].pos.y > height then
@@ -294,6 +323,10 @@ function draw_bug(bug)
 
 end
 
+function draw_cookie(cookie)
+  love.graphics.circle('fill', cookie.pos.x, cookie.pos.y, cookie.shape.width)
+end
+
 
 function love.draw()
   for i, bug in ipairs(bugs) do
@@ -302,6 +335,11 @@ function love.draw()
       love.graphics.setColor(1, 0, 0)
     end
     draw_bug(bug)
+  end
+
+  for i, cok in ipairs(cookies) do
+    love.graphics.setColor(1, 1, 0)
+    draw_cookie(cok)
   end
 
   love.graphics.setBackgroundColor(0.1, 1, 0.3)
