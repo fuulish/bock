@@ -58,6 +58,12 @@ function love.load(args)
   def_cookie_width = def_bug_width * 10
   cookie_creation_rate = bug_creation_rate / 2
 
+  max_frogs = 5
+  frogs = {}
+
+  def_frog_width = def_bug_width * 5
+  frog_creation_rate = 0.5 -- alternate sides as well
+
   main_bug_width = def_bug_width
   main_bug_length = def_bug_length
 
@@ -105,6 +111,39 @@ function calc_dist_mat()
       end
     end
   end
+end
+
+
+function get_init_frog_orientation(x, y)
+  local ori = { x = 0, y = 0 }
+
+  if x < 0.1 * width then
+    ori.x = x + 1
+    ori.y = 0
+  elseif x > 0.9 * width then
+    ori.x = x - 1
+    ori.y = 0
+  else
+    ori.x = x
+    ori.y = y - 1
+  end
+
+  return ori
+end
+
+
+-- frogs need an orientation in which to shoot with their tongue
+function add_frog(x, y, radius, orientation)
+  radius = radius or def_frog_width
+  x = x or math.random(width)
+  y = y or 0
+
+  orientation = orientation or get_init_frog_orientation(x, y)
+  frogs[#frogs + 1] = {
+    pos = { x = x, y = y },
+    shape = { width = radius },
+    orientation = orientation,
+  }
 end
 
 
@@ -324,6 +363,11 @@ function love.update(dt)
     add_cookie(math.random(width), 0)
   end
 
+  -- always have at least one frog to indicate plane movement
+  if #frogs < max_frogs and (math.random() <= frog_creation_rate or #frogs < 1) then
+    add_frog()
+  end
+
   death_vel = math.min(death_vel + 1, max_death_vel) / death_vel_red
   death_bar = death_bar - death_vel
 
@@ -392,6 +436,11 @@ function draw_cookie(cookie)
   love.graphics.circle('fill', cookie.pos.x, cookie.pos.y, cookie.shape.width)
 end
 
+function draw_frog(frog)
+  love.graphics.setColor(0, 0, 1)
+  love.graphics.circle('fill', frog.pos.x, frog.pos.y, frog.shape.width)
+end
+
 
 function love.draw()
   for i, bug in ipairs(bugs) do
@@ -405,6 +454,10 @@ function love.draw()
   for i, cok in ipairs(cookies) do
     love.graphics.setColor(1, 1, 0)
     draw_cookie(cok)
+  end
+
+  for i, frg in ipairs(frogs) do
+    draw_frog(frg)
   end
 
   love.graphics.setBackgroundColor(0.1, 1, 0.3)
