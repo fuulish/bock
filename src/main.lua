@@ -433,6 +433,7 @@ function draw_bug(bug)
 end
 
 function draw_cookie(cookie)
+  love.graphics.setColor(1, 1, 0)
   love.graphics.circle('fill', cookie.pos.x, cookie.pos.y, cookie.shape.width)
 end
 
@@ -452,7 +453,6 @@ function love.draw()
   end
 
   for i, cok in ipairs(cookies) do
-    love.graphics.setColor(1, 1, 0)
     draw_cookie(cok)
   end
 
