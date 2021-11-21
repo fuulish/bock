@@ -68,6 +68,8 @@ function love.load(args)
   init_dist_mat()
   calc_dist_mat()
 
+  curtime = os.clock()
+
   -- also create an overall container for bugs, objects, frogs, and feet
 end
 
@@ -304,6 +306,7 @@ end
 
 
 function love.update(dt)
+  local tstart = os.clock()
   if #bugs < max_bugs and math.random() <= bug_creation_rate then
     add_bug(math.random(width),
             0,
@@ -330,6 +333,13 @@ function love.update(dt)
   if bugs[1].pos.y > height then
     love.event.quit()
   end
+  local tstop = os.clock()
+
+  -- if debug then
+    print(string.format("took %.8f seconds for the hardest loop", tstop - tstart))
+    print(string.format("took %.8f seconds for the full loop", tstop - curtime))
+  -- end
+  curtime = tstop
 end
 
 
