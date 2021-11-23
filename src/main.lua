@@ -365,23 +365,26 @@ function cohesion(center)
 end
 
 
-function calc_bug_center()
-  return calc_prop_avg(pos)
+function calc_bug_center(pos)
+  return calc_prop_avg('pos', pos)
 end
 
 
-function calc_bug_avel()
-  return calc_prop_avg(vel)
+function calc_bug_avel(pos)
+  return calc_prop_avg('vel', pos)
 end
 
 
-function calc_prop_avg(prop)
+function calc_prop_avg(prop, center)
   local x = 0.
   local y = 0.
 
-  for i in pairs(bugs) do
-    x = x + bugs[i][prop].x
-    y = y + bugs[i][prop].y
+  for i, bug in ipairs(bugs) do
+    -- calculate distance to central bug or just take all if no center provided
+    if not center or vec_len( { x = bug.pos.x - center.x, y = bug.pos.y - center.y } ) < dist_cut then
+      x = x + bugs[i][prop].x
+      y = y + bugs[i][prop].y
+    end
   end
 
   x = x / #bugs
