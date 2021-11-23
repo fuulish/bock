@@ -325,7 +325,7 @@ function alignment()
   local align = { x = 0, y = 0 }
 
   for i in pairs(bugs) do
-    local avel = calc_bug_avel(bugs[i].pos)
+    local avel = calc_bug_avel(i)
 
     align.x = avel.x - bugs[i].vel.x
     align.y = avel.y - bugs[i].vel.y
@@ -352,7 +352,7 @@ function cohesion()
 
 
   for i in pairs(bugs) do
-    local center = calc_bug_center(bugs[i].pos)
+    local center = calc_bug_center(i)
 
     coh.x = center.x - bugs[i].pos.x
     coh.y = center.y - bugs[i].pos.y
@@ -369,23 +369,23 @@ function cohesion()
 end
 
 
-function calc_bug_center(pos)
-  return calc_prop_avg('pos', pos)
+function calc_bug_center(bug_idx)
+  return calc_prop_avg('pos', bug_idx)
 end
 
 
-function calc_bug_avel(pos)
-  return calc_prop_avg('vel', pos)
+function calc_bug_avel(bug_idx)
+  return calc_prop_avg('vel', bug_idx)
 end
 
 
-function calc_prop_avg(prop, center)
+function calc_prop_avg(prop, bug_idx)
   local x = 0.
   local y = 0.
 
   for i, bug in ipairs(bugs) do
     -- calculate distance to central bug or just take all if no center provided
-    if not center or vec_len( { x = bug.pos.x - center.x, y = bug.pos.y - center.y } ) < dist_cut then
+    if not bug_idx or dm[i][bug_idx] < dist_cut then
       x = x + bugs[i][prop].x
       y = y + bugs[i][prop].y
     end
