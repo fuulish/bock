@@ -13,6 +13,8 @@ function love.load(args)
     end
   end
 
+  dist_cut = 100
+
   world_speed = 30
 
   max_bugs = 20
@@ -267,13 +269,10 @@ function update_bugs(dt)
     table.remove(bugs, lost_bugs[i])
   end
 
-  center = calc_bug_center()
-  avel = calc_bug_avel()
-
   -- perform flocking update
 
-  cohesion(center)
-  alignment(avel)
+  cohesion()
+  alignment()
 
   chill()
 
@@ -322,10 +321,12 @@ function calc_separation_bias(me)
 end
 
 
-function alignment(avel)
+function alignment()
   local align = { x = 0, y = 0 }
 
   for i in pairs(bugs) do
+    local avel = calc_bug_avel(bugs[i].pos)
+
     align.x = avel.x - bugs[i].vel.x
     align.y = avel.y - bugs[i].vel.y
 
@@ -345,11 +346,14 @@ function randomize()
 end
 
 
-function cohesion(center)
+function cohesion()
   local coh = { x = 0, y = 0 }
   local fac = 1
 
+
   for i in pairs(bugs) do
+    local center = calc_bug_center(bugs[i].pos)
+
     coh.x = center.x - bugs[i].pos.x
     coh.y = center.y - bugs[i].pos.y
 
