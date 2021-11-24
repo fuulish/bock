@@ -13,7 +13,7 @@ function love.load(args)
     end
   end
 
-  dist_cut = 100
+  dist_cut = 224
 
   world_speed = 30
 
@@ -270,15 +270,6 @@ function update_bugs(dt)
   for i = #lost_bugs, 1, -1 do
     table.remove(bugs, lost_bugs[i])
   end
-
-  -- perform flocking update
-
-  cohesion()
-  alignment()
-
-  chill()
-
-  randomize()
 end
 
 
@@ -405,8 +396,7 @@ end
 function love.update(dt)
   local tstart = os.clock()
 
-  move_world(dt)
-
+  -- add new entities
   if #bugs < max_bugs and math.random() <= bug_creation_rate then
     add_bug(math.random(width),
             0,
@@ -423,24 +413,35 @@ function love.update(dt)
     add_frog()
   end
 
+  -- update things in the world
   death_vel = math.min(death_vel + 1, max_death_vel) / death_vel_red
   death_bar = death_bar - death_vel
+
+  -- move the plane of existence by moving all of the objects
+  move_world(dt)
 
   init_dist_mat()
   calc_dist_mat()
 
-  -- move the plane of existence by moving all of the objects?
+  -- flocking update
+  cohesion()
+  alignment()
+  chill()
+  randomize()
+
   -- just zip all relevant lists together (like in python, if it exists)
+  -- or collect those functions in a global table
   update_bugs(dt)
   update_cookies(dt)
   update_frogs(dt)
+
   handle_input()
 
   if bugs[1].pos.y > height then
     love.event.quit()
   end
-  local tstop = os.clock()
 
+  local tstop = os.clock()
   if debug or debugtime then
     io.write(string.format("took %.6f for update, %.6f seconds for the full loop\r",
                            tstop - tstart,
