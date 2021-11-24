@@ -372,14 +372,24 @@ function calc_bug_avel(bug_idx)
 end
 
 
-function calc_prop_avg(prop, bug_idx)
+function calc_prop_avg(prop, bug_idx, center)
   local x = 0.
   local y = 0.
   local num_bugs = 0
+  local dlt = 0
 
   for i, bug in ipairs(bugs) do
+    if center then
+      dlt = vec_len({
+        x = center.x - bugs[i][prop].x,
+        y = center.y - bugs[i][prop].y,
+      })
+    else
+      dlt = dm[i][bug_idx]
+    end
+
     -- calculate distance to central bug or just take all if no center provided
-    if not bug_idx or dm[i][bug_idx] < dist_cut then
+    if not bug_idx or dlt < dist_cut then
       x = x + bugs[i][prop].x
       y = y + bugs[i][prop].y
       num_bugs = num_bugs + 1
