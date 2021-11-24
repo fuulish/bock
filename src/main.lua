@@ -521,9 +521,11 @@ function love.draw()
   love.graphics.setColor(0, 0, 0)
   love.graphics.line(0, death_bar, width, death_bar)
 
-  center = calc_bug_center()
-  love.graphics.setColor(0, 0, 1)
-  love.graphics.circle('fill', center.x, center.y, def_bug_width / 2)
+  for i=1,#bugs do
+    center = calc_bug_center(i)
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.circle('fill', center.x, center.y, def_bug_width / 2)
+  end
 
   -- debugging
   love.graphics.origin()
