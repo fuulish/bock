@@ -114,8 +114,10 @@ function calc_dist_mat()
         dm[i][j] = 0
       elseif i < j then
         -- refactor into reusable function
-        local d = { x = bi.pos.x - bj.pos.x, y = bi.pos.y - bj.pos.y }
-        dm[i][j] = vec_len(d)
+        dm[i][j] = vec_len({
+          x = bi.pos.x - bj.pos.x,
+          y = bi.pos.y - bj.pos.y
+        })
       elseif i > j then
         dm[i][j] = dm[j][i]
       end
