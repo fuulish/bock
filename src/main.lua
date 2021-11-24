@@ -384,17 +384,19 @@ end
 function calc_prop_avg(prop, bug_idx)
   local x = 0.
   local y = 0.
+  local num_bugs = 0
 
   for i, bug in ipairs(bugs) do
     -- calculate distance to central bug or just take all if no center provided
     if not bug_idx or dm[i][bug_idx] < dist_cut then
       x = x + bugs[i][prop].x
       y = y + bugs[i][prop].y
+      num_bugs = num_bugs + 1
     end
   end
 
-  x = x / #bugs
-  y = y / #bugs
+  x = x / num_bugs
+  y = y / num_bugs
 
   return { x = x, y = y }
 end
