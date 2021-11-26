@@ -62,6 +62,9 @@ function love.load(args)
   def_cookie_width = def_bug_width * 10
   cookie_creation_rate = bug_creation_rate / 4
 
+  cookie_margin = 1.1 * def_cookie_width
+  cookie_min_neigh = 5
+
   max_frogs = 5
   frogs = {}
 
