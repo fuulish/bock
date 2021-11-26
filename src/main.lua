@@ -170,6 +170,7 @@ function add_cookie(x, y, width)
 
   cookies[#cookies + 1] = {
     pos = { x = x, y = y },
+    vel = { x = 0, y = 0 },
     shape = { width = width },
   }
 end
@@ -232,6 +233,28 @@ function update_cookies(dt)
   local lost_cookies = {}
 
   for i, c in ipairs(cookies) do
+    local numneighs = 0
+    local cumvel = { x = 0, y = 0 }
+    for j, b in ipairs(bugs) do
+      if vec_len({
+        x = b.pos.x - c.pos.x,
+        y = b.pos.y - c.pos.y
+      }) < cookie_margin then
+        numneighs = numneighs + 1
+      end
+    end
+
+    if numneighs > cookie_min_neigh then
+      local vel = calc_prop_avg('vel', nil, c.pos)
+      c.vel = vel
+    end
+
+    c.pos.x = c.pos.x + dt * c.vel.x
+    c.pos.y = c.pos.y + dt * c.vel.y
+
+    -- if there are a certain number of bugs under the cookie, move it
+    -- use the average velocity of boid flock centered around cookie
+
     if c.pos.y > death_bar then
       table.insert(lost_cookies, i)
     end
