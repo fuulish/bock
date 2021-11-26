@@ -235,18 +235,23 @@ function update_cookies(dt)
   for i, c in ipairs(cookies) do
     local numneighs = 0
     local cumvel = { x = 0, y = 0 }
+
     for j, b in ipairs(bugs) do
       if vec_len({
         x = b.pos.x - c.pos.x,
         y = b.pos.y - c.pos.y
       }) < cookie_margin then
+        cumvel.x = cumvel.x + b.vel.x
+        cumvel.y = cumvel.y + b.vel.y
+
         numneighs = numneighs + 1
       end
     end
 
     if numneighs > cookie_min_neigh then
-      local vel = calc_prop_avg('vel', nil, c.pos)
-      c.vel = vel
+      --local vel = calc_prop_avg('vel', nil, c.pos)
+      c.vel.x = cumvel.x / numneighs
+      c.vel.y = cumvel.y / numneighs
     end
 
     c.pos.x = c.pos.x + dt * c.vel.x
