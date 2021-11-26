@@ -378,6 +378,10 @@ function calc_prop_avg(prop, bug_idx, center)
   local num_bugs = 0
   local dlt = 0
 
+  if not bug_idx and not center then
+    return nil
+  end
+
   for i, bug in ipairs(bugs) do
     if center then
       dlt = vec_len({
