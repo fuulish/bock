@@ -250,7 +250,7 @@ function update_cookies(dt)
     end
 
     c.pos.x = c.pos.x + dt * c.vel.x
-    c.pos.y = c.pos.y + dt * c.vel.y
+    c.pos.y = c.pos.y - dt * c.vel.y
 
     -- if there are a certain number of bugs under the cookie, move it
     -- use the average velocity of boid flock centered around cookie
@@ -412,7 +412,7 @@ function calc_prop_avg(prop, bug_idx, center)
     if center then
       dlt = vec_len({
         x = center.x - bugs[i][prop].x,
-        y = center.y - bugs[i][prop].y,
+        y = center.y - bugs[i][prop].y
       })
     else
       dlt = dm[i][bug_idx]
