@@ -91,12 +91,16 @@ function love.load(args)
   init_dist_mat()
   calc_dist_mat()
 
+  targets = {}
+  def_target_width = 50
+
   curtime = os.clock()
 
   registered_tables = {
     bugs,
     cookies,
-    frogs
+    frogs,
+    targets,
   }
 
   -- also create an overall container for bugs, objects, frogs, and feet
@@ -196,6 +200,19 @@ function add_bug(x, y, vx, vy, width, length)
     pos   = {  x = x,   y = y  },
     vel   = {  x = vx,  y = vy },
     shape = {  width = width, length = length},
+  }
+end
+
+
+function add_target(x, y, width)
+  x = x or math.random() * width
+  y = y or math.random() * height
+
+  width = width or def_target_width
+
+  targets[ #targets + 1 ] = {
+    pos = { x = x, y = y },
+    shape = { width = width },
   }
 end
 
@@ -508,6 +525,7 @@ function love.update(dt)
 
   if #cookies < max_cookies and math.random() <= cookie_creation_rate then
     add_cookie(math.random(width), 0)
+    add_target(math.random(width), math.random(height), def_target_width * math.random())
   end
 
   -- always have at least one frog to indicate plane movement
@@ -598,6 +616,32 @@ function draw_cookie(cookie)
   love.graphics.circle('fill', cookie.pos.x, cookie.pos.y, cookie.shape.width)
 end
 
+function draw_target(tgt)
+  love.graphics.setColor(1, 0, 0)
+  -- target width
+  local qpi = math.pi / 4
+  local corners = {
+    ll = {
+      x = tgt.pos.x + math.cos(-3 * qpi) * def_target_width,
+      y = tgt.pos.y + math.sin(-3 * qpi) * def_target_width,
+    },
+    lr = {
+      x = tgt.pos.x + math.cos(-qpi) * def_target_width,
+      y = tgt.pos.y + math.sin(-qpi) * def_target_width,
+    },
+    ur = {
+      x = tgt.pos.x + math.cos(qpi) * def_target_width,
+      y = tgt.pos.y + math.sin(qpi) * def_target_width,
+    },
+    ul = {
+      x = tgt.pos.x + math.cos(3 * qpi) * def_target_width,
+      y = tgt.pos.y + math.sin(3 * qpi) * def_target_width,
+    },
+  }
+  love.graphics.line(corners.ll.x, corners.ll.y, corners.ur.x, corners.ur.y)
+  love.graphics.line(corners.ul.x, corners.ul.y, corners.lr.x, corners.lr.y)
+end
+
 function get_tongue_pos(frog)
   local tongue = {
     x = frog.pos.x + frog.orientation.x * frog.shape.width * 0.9,
@@ -649,6 +693,10 @@ function love.draw()
 
   for i, frg in ipairs(frogs) do
     draw_frog(frg)
+  end
+
+  for i, tgt in ipairs(targets) do
+    draw_target(tgt)
   end
 
   love.graphics.setBackgroundColor(0.1, 1, 0.3)
