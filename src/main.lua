@@ -133,14 +133,14 @@ function get_init_frog_orientation(x, y)
   local ori = { x = 0, y = 0 }
 
   if x < 0.1 * width then
-    ori.x = x + 1
+    ori.x = 1
     ori.y = 0
   elseif x > 0.9 * width then
-    ori.x = x - 1
+    ori.x = -1
     ori.y = 0
   else
-    ori.x = x
-    ori.y = y - 1
+    ori.x = 0
+    ori.y = -1
   end
 
   return ori
