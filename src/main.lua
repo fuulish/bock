@@ -308,6 +308,10 @@ end
 
 
 function move_world(dt)
+  if bugs[1].pos.y > height / 2 then
+    return
+  end
+
   for t in pairs(registered_tables) do
     for i, obj in ipairs(registered_tables[t]) do
       obj.pos.y = obj.pos.y + dt * world_speed
