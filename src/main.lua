@@ -243,6 +243,16 @@ function attack_bugs()
 
       f.tongue.x = tongue.x + f.orientation.x * f.tongue.len
       f.tongue.y = tongue.y + f.orientation.y * f.tongue.len
+
+      for j, b in ipairs(bugs) do
+        if circles_colliding(f.tongue, b.pos, get_tongue_width(f), b.shape.width) then
+          b.hit = true
+          f.attacking = 0
+          f.tongue.len = 0
+          f.tongue.x = tongue.x
+          f.tongue.y = tongue.y
+        end
+      end
     elseif math.random() > frog_attack_rate then
       f.attacking = def_attack_len
       f.tongue.max = def_tongue_len * math.random()
@@ -252,6 +262,17 @@ function attack_bugs()
       f.tongue.y = tongue.y
     end
   end
+end
+
+function circles_colliding(a, b, r1, r2) -- not worlds
+  local dx = a.x - b.x
+  local dy = a.y - b.y
+
+  if dx*dx + dy*dy <= (r1+r2) * (r1+r2) then
+    return true
+  end
+
+  return false
 end
 
 
@@ -307,7 +328,7 @@ function update_bugs(dt)
     o.pos.y = o.pos.y - dt * o.vel.y -- up is down and down is up
 
     -- die at the bottom
-    if o.pos.y > death_bar then
+    if o.pos.y > death_bar or o.hit then
       table.insert(lost_bugs, i)
     else
       -- reflective boundaries left, right, top
