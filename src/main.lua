@@ -71,6 +71,10 @@ function love.load(args)
   def_frog_width = def_bug_width * 5
   frog_creation_rate = 0.0005 -- alternate sides as well
 
+  def_tongue_len = def_frog_width * 20
+  frog_attack_rate = 0.5
+  def_attack_len = 50
+
   main_bug_width = def_bug_width
   main_bug_length = def_bug_length
 
@@ -158,6 +162,8 @@ function add_frog(x, y, radius, orientation)
     pos = { x = x, y = y },
     shape = { width = radius },
     orientation = orientation,
+    attacking = 0,
+    tongue = { x = x, y = y, len = 0, max = 0},
   }
 end
 
@@ -225,6 +231,26 @@ function update_frogs(dt)
 
   for i = #lost_frogs, 1, -1 do
     table.remove(frogs, lost_frogs[i])
+  end
+end
+
+function attack_bugs()
+  for i, f in ipairs(frogs) do
+    local tongue = get_tongue_pos(f)
+    if f.attacking > 0 then
+      f.attacking = f.attacking - 1
+      f.tongue.len = (def_attack_len - f.attacking) / def_attack_len * f.tongue.max
+
+      f.tongue.x = tongue.x + f.orientation.x * f.tongue.len
+      f.tongue.y = tongue.y + f.orientation.y * f.tongue.len
+    elseif math.random() > frog_attack_rate then
+      f.attacking = def_attack_len
+      f.tongue.max = def_tongue_len * math.random()
+      f.tongue.len = 0
+
+      f.tongue.x = tongue.x
+      f.tongue.y = tongue.y
+    end
   end
 end
 
@@ -315,6 +341,9 @@ function move_world(dt)
   for t in pairs(registered_tables) do
     for i, obj in ipairs(registered_tables[t]) do
       obj.pos.y = obj.pos.y + dt * world_speed
+      if obj.tongue then
+        obj.tongue.y = obj.tongue.y + dt * world_speed
+      end
     end
   end
 end
@@ -487,6 +516,8 @@ function love.update(dt)
   update_cookies(dt)
   update_frogs(dt)
 
+  attack_bugs()
+
   handle_input()
 
   if bugs[1].pos.y > height then
@@ -546,22 +577,35 @@ function draw_cookie(cookie)
   love.graphics.circle('fill', cookie.pos.x, cookie.pos.y, cookie.shape.width)
 end
 
-function draw_frog(frog)
-  love.graphics.setColor(0, 0, 1)
-  love.graphics.circle('fill', frog.pos.x, frog.pos.y, frog.shape.width)
-
+function get_tongue_pos(frog)
   local tongue = {
     x = frog.pos.x + frog.orientation.x * frog.shape.width * 0.9,
     y = frog.pos.y + frog.orientation.y * frog.shape.width * 0.9,
   }
+  return tongue
+end
+
+function draw_frog(frog)
+  love.graphics.setColor(0, 0, 1)
+  love.graphics.circle('fill', frog.pos.x, frog.pos.y, frog.shape.width)
+
+  local tongue = get_tongue_pos(frog)
+  local tongue_width = frog.shape.width * 0.1
 
   love.graphics.setColor(1, 1, 1)
   love.graphics.circle(
     'fill',
     tongue.x,
     tongue.y,
-    frog.shape.width * 0.1
+    tongue_width
   )
+
+  if frog.attacking > 0 then
+    love.graphics.setLineStyle('rough')
+    love.graphics.setLineWidth(tongue_width)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.line(tongue.x, tongue.y, frog.tongue.x, frog.tongue.y)
+  end
 end
 
 
