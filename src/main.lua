@@ -549,6 +549,19 @@ end
 function draw_frog(frog)
   love.graphics.setColor(0, 0, 1)
   love.graphics.circle('fill', frog.pos.x, frog.pos.y, frog.shape.width)
+
+  local tongue = {
+    x = frog.pos.x + frog.orientation.x * frog.shape.width * 0.9,
+    y = frog.pos.y + frog.orientation.y * frog.shape.width * 0.9,
+  }
+
+  love.graphics.setColor(0, 0, 0)
+  love.graphics.circle(
+    'fill',
+    tongue.x,
+    tongue.y,
+    frog.shape.width * 0.1
+  )
 end
 
 
