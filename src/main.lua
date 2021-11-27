@@ -252,6 +252,9 @@ function update_cookies(dt)
       --local vel = calc_prop_avg('vel', nil, c.pos)
       c.vel.x = cumvel.x / numneighs
       c.vel.y = cumvel.y / numneighs
+    else
+      c.vel.x = c.vel.x * 0.95
+      c.vel.y = c.vel.y * 0.95
     end
 
     c.pos.x = c.pos.x + dt * c.vel.x
