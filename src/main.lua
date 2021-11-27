@@ -585,12 +585,16 @@ function get_tongue_pos(frog)
   return tongue
 end
 
+function get_tongue_width(frog)
+  return 0.1 * frog.shape.width
+end
+
 function draw_frog(frog)
   love.graphics.setColor(0, 0, 1)
   love.graphics.circle('fill', frog.pos.x, frog.pos.y, frog.shape.width)
 
   local tongue = get_tongue_pos(frog)
-  local tongue_width = frog.shape.width * 0.1
+  local tongue_width = get_tongue_width(frog)
 
   love.graphics.setColor(1, 1, 1)
   love.graphics.circle(
