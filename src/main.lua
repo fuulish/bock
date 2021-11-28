@@ -798,6 +798,8 @@ function love.keyreleased(key)
     elseif game_state == State.fin then
       game_state = State.cls
     end
+  elseif 'space' == key then
+    game_state = State.run
   end
 end
 
