@@ -5,6 +5,16 @@ function love.load(args)
   debug = false
   debug_time = false
 
+  finish_game = false
+
+  State = {
+    run = 1,
+    fin = 2,
+    cls = 3,
+  }
+
+  game_state = State.run
+
   for i, arg in ipairs(args) do
     if 'debug' == arg then
       debug = true
@@ -537,6 +547,12 @@ end
 function love.update(dt)
   local tstart = os.clock()
 
+  if game_state == State.fin then
+    return
+  elseif game_state == State.cls then
+    love.event.quit()
+  end
+
   -- add new entities
   if #bugs < max_bugs and math.random() <= bug_creation_rate then
     add_bug(math.random(width),
@@ -584,7 +600,7 @@ function love.update(dt)
   handle_input()
 
   if bugs[1].pos.y > height then
-    love.event.quit()
+    game_state = State.fin
   end
 
   local tstop = os.clock()
@@ -763,7 +779,11 @@ end
 
 function love.keyreleased(key)
   if 'q' == key then
-    love.event.quit()
+    if game_state == State.run then
+      game_state = State.fin
+    elseif game_state == State.fin then
+      game_state = State.cls
+    end
   end
 end
 
