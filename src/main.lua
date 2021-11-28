@@ -13,6 +13,8 @@ function love.load(args)
     end
   end
 
+  score = 0
+
   dist_cut = 224
 
   world_speed = 30
@@ -512,6 +514,26 @@ function calc_prop_avg(prop, bug_idx, center)
 end
 
 
+function detect_score()
+  local finished = {}
+
+  for i, c in ipairs(cookies) do
+    for j, t in ipairs(targets) do
+      if circles_colliding(c.pos, t.pos, c.shape.width, t.shape.width) then
+        table.insert(finished, {i,j})
+      end
+    end
+  end
+
+  for f=#finished, 1, -1 do
+    table.remove(cookies, finished[f].i)
+    table.remove(targets, finished[f].j)
+  end
+
+  return #finished
+end
+
+
 function love.update(dt)
   local tstart = os.clock()
 
@@ -554,6 +576,8 @@ function love.update(dt)
   update_bugs(dt)
   update_cookies(dt)
   update_frogs(dt)
+
+  score = score + detect_score()
 
   attack_bugs()
 
