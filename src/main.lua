@@ -257,7 +257,7 @@ end
 function update_frogs(dt)
   local lost_frogs = {}
 
-  for i, f in pairs(frogs) do
+  for i, f in ipairs(frogs) do
     if f.pos.y > death_bar then
       table.insert(lost_frogs, i)
     end
