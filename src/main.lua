@@ -105,6 +105,7 @@ function love.load(args)
 
   targets = {}
   def_target_width = 50
+  target_score_red = 0.5
 
   curtime = os.clock()
 
@@ -537,7 +538,7 @@ function detect_score()
 
   for i, c in ipairs(cookies) do
     for j, t in ipairs(targets) do
-      if circles_colliding(c.pos, t.pos, c.shape.width, t.shape.width) then
+      if circles_colliding(c.pos, t.pos, c.shape.width, t.shape.width * target_score_red) then
         table.insert(finished, {i,j})
       end
     end
