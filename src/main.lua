@@ -230,6 +230,10 @@ end
 
 
 function handle_input()
+  if #bugs == 0 then
+    return
+  end
+
   --no friction and continuous, floaty movement
   if love.keyboard.isDown('k') or love.keyboard.isDown('up') then
     bugs[1].vel.y = math.min(bugs[1].vel.y + dt_vel_inp, max_vel)
@@ -384,6 +388,10 @@ end
 
 
 function move_world(dt)
+  if #bugs == 0 then
+    return
+  end
+
   if bugs[1].pos.y > height / 2 then
     return
   end
@@ -599,7 +607,7 @@ function love.update(dt)
 
   handle_input()
 
-  if bugs[1].pos.y > height then
+  if #bugs == 0 or bugs[1].pos.y > height then
     game_state = State.fin
   end
 
