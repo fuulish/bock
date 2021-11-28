@@ -268,6 +268,22 @@ function update_frogs(dt)
   end
 end
 
+
+function update_targets()
+  local lost_targets = {}
+
+  for i, t in ipairs(targets) do
+    if t.pos.y > death_bar then
+      table.insert(lost_targets, i)
+    end
+  end
+
+  for i = #lost_targets, 1, -1 do
+    table.remove(targets, lost_targets[i])
+  end
+end
+
+
 function attack_bugs()
   for i, f in ipairs(frogs) do
     local tongue = get_tongue_pos(f)
@@ -601,6 +617,7 @@ function love.update(dt)
   update_bugs(dt)
   update_cookies(dt)
   update_frogs(dt)
+  update_targets()
 
   score = score + detect_score()
 
