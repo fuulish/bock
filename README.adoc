@@ -10,6 +10,8 @@ Try to gather as many followers as possible and escape the hot pursuit of man's 
 Along the way, try not to fall victim to frogs.
 And, most importantly, gather as much loot as possible and don't lose it and your comrades on your way.
 
+image::pics/bock.png[]
+
 == Controls
 
 Use arrow keys to steer main bug (might not be highlighted).
