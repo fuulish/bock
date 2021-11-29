@@ -12,6 +12,7 @@ function love.load(args)
     run = 1,
     fin = 2,
     cls = 3,
+    pause = 4,
   }
 
   game_state = State.run
@@ -579,6 +580,8 @@ function love.update(dt)
     return
   elseif game_state == State.cls then
     love.event.quit()
+  elseif game_state == State.pause then
+    return
   end
 
   -- add new entities
@@ -825,7 +828,11 @@ function love.keyreleased(key)
       game_state = State.cls
     end
   elseif 'space' == key then
-    game_state = State.run
+    if game_state == State.run then
+      game_state = State.pause
+    elseif game_state == State.fin or game_state == State.pause then
+      game_state = State.run
+    end
   end
 end
 
