@@ -413,7 +413,7 @@ function move_world(dt)
     return
   end
 
-  if bugs[1].pos.y > height / 2 then
+  if bugs[1].pos.y < height / 2 then
     return
   end
 
