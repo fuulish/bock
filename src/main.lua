@@ -750,6 +750,7 @@ end
 function love.draw()
   if game_state == State.fin then
     love.graphics.setBackgroundColor(0, 0, 1)
+    love.graphics.setColor(1, 1, 1)
     love.graphics.print("SCORE: " .. score, width / 2, height / 2)
     return
   end
