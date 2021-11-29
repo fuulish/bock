@@ -9,5 +9,8 @@ debug:
 debugtime:
 	love src debugtime
 
+debugcenter:
+	love src debugcenter
+
 run:
 	love src

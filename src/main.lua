@@ -4,6 +4,7 @@ function love.load(args)
 
   debug = false
   debug_time = false
+  debug_center = false
 
   finish_game = false
 
@@ -20,6 +21,8 @@ function love.load(args)
       debug = true
     elseif 'debugtime' == arg then
       debugtime = true
+    elseif 'debugcenter' == arg then
+      debugcenter = true
     end
   end
 
@@ -776,10 +779,12 @@ function love.draw()
   love.graphics.setColor(0, 0, 0)
   love.graphics.line(0, death_bar, width, death_bar)
 
-  for i=1,#bugs do
-    center = calc_bug_center(i)
-    love.graphics.setColor(0, 0, 0)
-    love.graphics.circle('fill', center.x, center.y, def_bug_width / 2)
+  if debugcenter or debug then
+    for i=1,#bugs do
+      center = calc_bug_center(i)
+      love.graphics.setColor(0, 0, 0)
+      love.graphics.circle('fill', center.x, center.y, def_bug_width / 2)
+    end
   end
 
   -- debugging
